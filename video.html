@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Details | H-VAULT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H<span>VAULT</span></a>
+            <nav><a href="index.html">Home</a><a href="browse.html">Browse</a></nav>
+        </div>
+    </header>
+
+    <div id="content" style="max-width: 1000px; margin: 50px auto; padding: 20px; display: flex; gap: 40px; flex-wrap: wrap;">
+        <!-- Injected -->
+    </div>
+
+    <script src="videos.js"></script>
+    <script>
+        const id = new URLSearchParams(window.location.search).get('id');
+        const v = getVideos().find(item => item.id == id);
+
+        if(v) {
+            document.getElementById('content').innerHTML = `
+                <div style="flex: 1; min-width: 300px;">
+                    <img src="${v.image}" style="width: 100%; border-radius: 20px; border: 2px solid var(--neon);">
+                </div>
+                <div style="flex: 2; min-width: 300px;">
+                    <h1 class="font-poppins" style="font-size: 3rem; margin-bottom: 10px;">${v.title}</h1>
+                    <p style="color: var(--neon); font-weight: bold; margin-bottom: 20px;">${v.ep} • ❤️ Rating: ${v.rating}/5</p>
+                    <p style="color: var(--gray); margin-bottom: 30px;">${v.desc}</p>
+                    <div style="display: flex; gap: 10px; margin-bottom: 40px;">
+                        ${v.tags.map(t => `<span style="background: #1a1a1a; padding: 5px 15px; border-radius: 20px; font-size: 12px; border: 1px solid #333;">${t}</span>`).join('')}
+                    </div>
+                    <a href="${v.tgLink}" target="_blank" class="btn-neon" style="width: 100%; text-align: center; font-size: 1.2rem;">TELEGRAM DOWNLOAD</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
+
