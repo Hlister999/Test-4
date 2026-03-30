@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | H-VAULT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="login" style="max-width: 400px; margin: 100px auto; text-align: center;">
+        <h2 class="font-poppins">Admin Access</h2>
+        <input type="password" id="pass" placeholder="Password" style="width:100%; padding:10px; margin:20px 0; background:#1a1a1a; border:1px solid #333; color:white;">
+        <button onclick="login()" class="btn-neon" style="width:100%">Enter</button>
+    </div>
+
+    <div id="dashboard" style="display: none; padding: 50px 5%;">
+        <h2 class="font-poppins">Dashboard (Local Only)</h2>
+        <p style="color: gray; margin-bottom: 20px;">Note: GitHub Pages is static. Changes here save only in your browser. Download JSON to update videos.js file.</p>
+        <button onclick="exportData()" class="btn-neon">Download updated videos.js data</button>
+    </div>
+
+    <script src="videos.js"></script>
+    <script>
+        function login() {
+            if(document.getElementById('pass').value === 'MySecretPass123') {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } else { alert('Wrong!'); }
+        }
+        function exportData() {
+            const data = getVideos();
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = "videos.json"; a.click();
+        }
+    </script>
+</body>
+</html>
+
