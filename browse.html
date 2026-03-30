@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse | H-VAULT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H<span>VAULT</span></a>
+            <div style="flex: 1; margin: 0 40px;"><input type="text" id="search" placeholder="Search..." style="width: 100%; background: #1a1a1a; border: 1px solid #333; padding: 8px 20px; border-radius: 20px; color: white; outline: none;"></div>
+            <nav><a href="index.html">Home</a><a href="browse.html" style="color:var(--neon)">Browse</a></nav>
+        </div>
+    </header>
+
+    <div class="grid" id="browseGrid"></div>
+    <div class="pagination" id="pagination"></div>
+
+    <script src="videos.js"></script>
+    <script>
+        let allVids = getVideos().filter(v => !v.isUpcoming).reverse();
+        const itemsPerPage = 10;
+        let currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+        currentPage = parseInt(currentPage);
+
+        function render() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filtered = allVids.filter(v => v.title.toLowerCase().includes(query));
+            
+            const start = (currentPage - 1) * itemsPerPage;
+            const pageItems = filtered.slice(start, start + itemsPerPage);
+            
+            document.getElementById('browseGrid').innerHTML = pageItems.map(v => `
+                <div class="card" onclick="location.href='video.html?id=${v.id}'">
+                    <img src="${v.image}" class="card-img">
+                    <div class="badge-18">18+</div>
+                    <div class="card-overlay">
+                        <p style="color: var(--neon); font-size: 10px; font-weight: bold;">${v.ep}</p>
+                        <h3 class="font-poppins">${v.title}</h3>
+                    </div>
+                </div>
+            `).join('');
+
+            // Pagination
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            let pgHtml = '';
+            for(let i=1; i<=totalPages; i++) {
+                pgHtml += `<a href="?page=${i}" class="page-btn ${i===currentPage?'active':''}">${i}</a>`;
+            }
+            document.getElementById('pagination').innerHTML = pgHtml;
+        }
+
+        document.getElementById('search').addEventListener('input', () => { currentPage = 1; render(); });
+        render();
+    </script>
+</body>
+</html>
+
