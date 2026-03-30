@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>H-VAULT | Premium Hentai Downloads</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">H<span>VAULT</span></a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="admin.html">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" style="text-align: center; padding: 100px 5%; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://picsum.photos/id/237/1200/400'); background-size: cover;">
+        <h1 class="font-poppins" style="font-size: 3.5rem; margin-bottom: 1rem;">Premium Hentai Vault</h1>
+        <p style="color: var(--gray); font-size: 1.2rem; margin-bottom: 2rem;">🔥 Instant Telegram Downloads • Watch • Download • Own</p>
+        <a href="browse.html" class="btn-neon">EXPLORE ARCHIVE</a>
+    </section>
+
+    <h2 class="font-poppins" style="padding: 40px 5% 0; color: var(--neon);">LATEST UPLOADS</h2>
+    <div class="grid" id="homeGrid"></div>
+
+    <script src="videos.js"></script>
+    <script>
+        const vids = getVideos().filter(v => !v.isUpcoming).reverse().slice(0, 10);
+        const container = document.getElementById('homeGrid');
+        
+        container.innerHTML = vids.map(v => `
+            <div class="card" onclick="location.href='video.html?id=${v.id}'">
+                <img src="${v.image}" class="card-img">
+                <div class="badge-18">18+</div>
+                <div class="card-overlay">
+                    <p style="color: var(--neon); font-size: 10px; font-weight: bold;">${v.ep} • ❤️ ${v.rating}/5</p>
+                    <h3 class="font-poppins" style="font-size: 1rem;">${v.title}</h3>
+                </div>
+            </div>
+        `).join('');
+    </script>
+</body>
+</html>
+
